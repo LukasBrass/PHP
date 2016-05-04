@@ -122,20 +122,30 @@
 	array("Nom"=>"Lloyd","Prenom"=>"Aline","Email"=>"dapibusgravida@utmolestieinedu","Taille"=>"145","Poids"=>"80")
 );
 			$nb=count($data);
-			$calc = ceil($nb/7);
+			$nbPages = 7;
+			$cellperpage = ceil($nb/$nbPages);
+			$index;
 			if (isset($_GET['page'])){
 				$page = $_GET['page'];
-				if(isset($_GET['azer'])){
-					$azer = $_GET['azer'];
-						if($azer = 25)
-							$page = $page - 25;
-						else if($azer = 26)
-							$page = $page + 25;
-						else $page = $azer*$calc;
-					}
+				if($page < 1) {
+					$page = 1;
+				$lower == 1;
+				}
+				else if($page > 6) {
+					$page = 6;
+					$upper = 6;
+				}
+				else {
+				$index = $page*$cellperpage;
+				$lower = $page-1;
+				$upper = $page+1;
+				}
 			}
-				else $page = 1;
-			for($i = $page;$i<$calc+$page;$i++){
+			else {
+				$page = 1;
+				$index = 0;
+			}
+			for($i = $index-1;$i<($index-1) + $cellperpage;$i++){
 				$personne=$data[$i];
 				$m=$personne['Poids'];
 				$t=$personne['Taille']/100;
@@ -159,15 +169,15 @@
 ?>			
     </tbody>
   </table>
-	<?php
-	echo"<form method='get' action='TP1exo2.php'>
-				<fieldset>
-				<button type='submit' name='page' value='25' </button> <<";
-			for($j=1;$j<7;$j++){
-			echo "<button type='submit' name='page' value='$j'</button> $j";
+	<form method='get' action='TP1exo2.php'>
+			<fieldset>
+				<?php
+				echo "<button type='submit' name='page' value='".$lower."'><<</button>";
+			for($j=1;$j<$nbPages;$j++){
+				echo "<button type='submit' name='page' value='".$j."'>".$j."</button>";
 			}
-				echo"<button type='submit' name='page' value='26'</button> >>
+				echo "<button type='submit' name='page' value='".$upper."'>>></button>";
+				?>
 				</fieldset>
-			</form>"
-			?>
+			</form>
 </body>
