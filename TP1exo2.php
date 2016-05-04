@@ -6,8 +6,8 @@
     #red {background-color : pink};</style>
 </head>
 <body>
+	<h1> Données</h1>
   <table>
-    <caption> tableau</caption>
     <thead>
       <tr>
         <th> Nom</th>
@@ -121,22 +121,53 @@
 	array("Nom"=>"Rice","Prenom"=>"Lois","Email"=>"nonmassanon@Aeneanca","Taille"=>"166","Poids"=>"58"),
 	array("Nom"=>"Lloyd","Prenom"=>"Aline","Email"=>"dapibusgravida@utmolestieinedu","Taille"=>"145","Poids"=>"80")
 );
-  foreach($data as $array) {
-      $imc=$array["Poids"]/(($array["Taille"]/100)*($array["Taille"]/100));
-    if($imc >= 25){
-     echo"<tr id='red'>";
+			$nb=count($data);
+			$calc = ceil($nb/7);
+			if (isset($_GET['page'])){
+				$page = $_GET['page'];
+				if(isset($_GET['azer'])){
+					$azer = $_GET['azer'];
+						if($azer = 25)
+							$page = $page - 25;
+						else if($azer = 26)
+							$page = $page + 25;
+						else $page = $azer*$calc;
+					}
+			}
+				else $page = 1;
+			for($i = $page;$i<$calc+$page;$i++){
+				$personne=$data[$i];
+				$m=$personne['Poids'];
+				$t=$personne['Taille']/100;
+				$imc=$m/($t*$t);
+				$class="";
+				 if($imc >= 25){
+     			echo"<tr id='red'>";
+    			}
+    		else{
+        	echo "<tr>";
+    		}
+	echo "<tr class=\"$class\">";
+	echo "<td>".$personne['Nom']."</td>";
+	echo "<td>".$personne['Prenom']."</td>";
+	echo "<td>".$personne['Email']."</td>";
+	echo "<td>".$personne['Taille']."</td>";
+	echo "<td>".$personne['Poids']."</td>";
+	echo "<td>".round($imc,2)."</td>";
+	echo "</tr>";
     }
-    else{
-        echo "<tr>";
-    }
-    foreach($array as $value) {
-      echo"<td>".$value."</td>";
-      $imc = round($imc,2);
-    }
-     echo"<td>".$imc."</td>";
-    echo "</tr>";
-    }
-?>
+?>			
     </tbody>
   </table>
+	<?php
+	echo"<form method='get' action='TP1exo2.php'>
+				<fieldset>
+				<button type='submit' name='page' value='25' </button> <<";
+			for($j=1;$j<7;$j++){
+			echo "<button type='submit' name='page' value='$j'</button> $j";
+			}
+				echo"<button type='submit' name='page' value='26'</button> >>
+				</fieldset>
+			</form>"
+			?>
 </body>
