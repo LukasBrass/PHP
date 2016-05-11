@@ -58,3 +58,12 @@
       </tbody>
   </body>
 </html>
+  
+  
+  // bien indenté , claire , fonctionne pour l'exo 1 et 2 ,le 3 fonctionne a moitié 
+  // le 3 nous envoye un lien  vide
+  // exo1 : 8 
+  //exo 2 : 8
+  //exo 3 : 2  (-2 car il manque les commentaire de l'exo3 mais nous envoye vers un lien)
+  //note : 18
+  
