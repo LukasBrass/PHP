@@ -5,14 +5,53 @@
     <title> films.php</title>
   </head>
   <body>
-    <h1>Films</h1>
-    <form>
-      <select name='real' method='get' action='films.php'>
-        <?php
+		<h1>Ajouter un Film</h1>
+		<form method="get" action="enregistrement.php">
+			Titre : <br>
+			<input type="text" name="titre"><br>
+			Genre : <br>
+			<select name="genre">
+				<?php
         $link=mysqli_connect("dwarves.iut-fbleau.fr","carlu","ludo1811","carlu");
         if(!$link){
             die("<p> connexion impossible</p>");
         }
+        $resultat=mysqli_query($link,"select distinct genre from Film");
+            while($genre=mysqli_fetch_object($resultat)){
+                echo"<option>".$genre->genre;
+            }
+					echo"</option>";
+				?>
+			</select><br>
+				Pays : <br>
+			<select name="codePays">
+				<?php
+        $resultat=mysqli_query($link,"select distinct codePays from Film");
+            while($pays=mysqli_fetch_object($resultat)){
+                echo"<option>".$pays->codePays;
+            }
+					echo"</option>";
+        ?>
+			</select><br>
+				Realisateur : <br>
+				<select name="realisateur">
+				<?php
+        $resultat=mysqli_query($link,"select distinct nom,prenom,idMes from Artiste join Film on (idMes = idArtiste)");
+             while($nomreal=mysqli_fetch_object($resultat)){
+                echo"<option value=".$nomreal->idMes.">".$nomreal->nom." ".$nomreal->prenom;
+						}
+					echo"</option>";
+				?>
+			</select><br>
+				Resume : <br>
+			<textarea rows="4" cols="50" name="resume"></textarea><br>
+				Annee : <br>
+				<input type="text" name="annee"><br>
+			<input type='submit' value='Envoyer'/>
+    <h1>liste des Films</h1>
+    <form>
+      <select name='real' method='get' action='films.php'>
+        <?php
         $resultat=mysqli_query($link,"select distinct nom from Artiste join Film on (idMes = idArtiste)");
         if($resultat){
             while($nom=mysqli_fetch_object($resultat)){
@@ -58,12 +97,3 @@
       </tbody>
   </body>
 </html>
-  
-  
-  // bien indenté , claire , fonctionne pour l'exo 1 et 2 ,le 3 fonctionne a moitié 
-  // le 3 nous envoye un lien  vide
-  // exo1 : 8 
-  //exo 2 : 8
-  //exo 3 : 2  (-2 car il manque les commentaire de l'exo3 mais nous envoye vers un lien)
-  //note : 18
-  
