@@ -1,6 +1,6 @@
 <?php
-class contact {
-	protected $id = 12;
+class personne {
+	protected $id;
 	protected $nom;
 	protected $prenom;
     
@@ -27,7 +27,22 @@ class contact {
   }
   
   function __toString(){
-     return $this->nom." ".$this->prenom;
+     return $this->id."_".$this->nom." ".$this->prenom;
   }
 }
+
+
+class contact extends personne{
+  protected $mail;
+  function __construct($id,$nom,$prenom,$mail){
+    parent::__construct($id,$nom,$prenom);
+    $this->mail=$mail;
+  }
+  function __toString(){
+    return parent::__toString()." : ".$this->mail;
+  }
+}
+  $ozcan = new contact(1,"Ozcan","Ali","ali.ozcan@gmail.com");
+  echo $ozcan;
+
 ?>
